@@ -42,5 +42,13 @@ with open(file_name,access_mode,buffering) as fo:
     print(fo.softspace)            
     print(fo.closed)               
 
-#write()方法
+#write()方法，将字符串写入文件，该方法无返回值
+fo.write(str)
+
+#read()方法，将size大小的字节数读出，无size则读出全部
+fo.read(size)
+fo.read()
+
+#readline()方法
+
 
