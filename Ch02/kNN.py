@@ -10,6 +10,7 @@ Created on Fri Jun 30 11:23:53 2017
 
 import numpy as np
 import operator
+import random
 
 def importFile2Array(filename,split = '\t'):
     '''
@@ -56,10 +57,58 @@ def classifyKNN(inX,dataSet,labels,k):
 def normalizeArray(inX,axis=0):
     maxArray = np.amax(inX,axis)
     minArray = np.amin(inX,axis)
+    ranges = maxArray - minArray
     
+    rangesArray = np.eye(len(ranges))
+    
+    for i in range(len(ranges)):
+        rangesArray[i][i] = 1/ranges[i]
 
+    return np.dot(inX - np.tile(minArray,(inX.shape[0],1)),rangesArray)
+    
+def trainOrSample(inX,percent=0.8):
+    '''将inX随机划分为训练集train和测试集sample，默认比例为0.8
+    '''
+    train = []
+    sample = []
+    
+    x = list(range(inX.shape[0]))
+    random.shuffle(x)
+    
+    for i in range(inX.shape[0]):
+        if i <= inX.shape[0]*percent - 1:
+            train.append(inX[x[i]])
+        else:
+            sample.append(inX[x[i]])
+    
+    return np.array(train),np.array(sample)
+    
 if __name__ == '__main__':
     
     filename = 'E:\GitHub\MLinAction\Ch02\SampleData\datingTestSet.txt'
     outputList = importFile2Array(filename,'\t')
-    print(outputList)
+    #print(outputList)
+    trainArray,sampleArray = trainOrSample(outputList)
+    #print(trainArray.shape[0])
+    #print(sampleArray.shape[0])
+    
+    trainDataset = trainArray[:,0:3].astype(float)
+    #print(trainDataset)
+    trainLabels = trainArray[:,-1]
+    #print(trainLabels)
+    sampleDataset = sampleArray[:,0:3].astype(float)
+    #print(sampleDataset)
+    sampleLabels = sampleArray[:,-1]
+    #print(sampleLabels)
+    
+    trainDatasetNorm = normalizeArray(trainDataset,0)
+    sampleDatasetNorm = normalizeArray(sampleDataset,0)
+    
+    count=0
+    
+    for i in range(len(sampleDatasetNorm)):
+        if classifyKNN(sampleDatasetNorm[i],trainDatasetNorm,trainLabels,5) == sampleLabels[i]:
+            count += 1
+
+    print(str(count/len(sampleLabels) * 100) + "%")
+    

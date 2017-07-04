@@ -46,9 +46,40 @@ with open(file_name,access_mode,buffering) as fo:
 fo.write(str)
 
 #read()方法，将size大小的字节数读出，无size则读出全部
-fo.read(size)
+fo.read([size])
 fo.read()
 
-#readline()方法
+#readline()方法，读取整行，包括 "\n" 字符
+fo.readline([size])
+
+'''
+文件 runoob.txt 的内容如下：
+1:www.runoob.com
+2:www.runoob.com
+3:www.runoob.com
+4:www.runoob.com
+5:www.runoob.com
+'''
+
+# 打开文件
+fo = open("runoob.txt", "rw+")
+print "文件名为: ", fo.name
+
+line = fo.readline()
+print "读取第一行 %s" % (line)
+
+line = fo.readline(5)
+print "读取的字符串为: %s" % (line)
+
+# 关闭文件
+fo.close()
+
+'''
+输出结果为：
+文件名为:  runoob.txt
+读取第一行 1:www.runoob.com
+
+读取的字符串为: 2:www
+'''
 
 
