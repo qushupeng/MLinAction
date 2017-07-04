@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 '''
 python 文件操作
 open 函数
