@@ -107,7 +107,7 @@ if __name__ == '__main__':
     count=0
     
     for i in range(len(sampleDatasetNorm)):
-        if classifyKNN(sampleDatasetNorm[i],trainDatasetNorm,trainLabels,5) == sampleLabels[i]:
+        if classifyKNN(sampleDatasetNorm[i],trainDatasetNorm,trainLabels,3) == sampleLabels[i]:
             count += 1
 
     print(str(count/len(sampleLabels) * 100) + "%")
