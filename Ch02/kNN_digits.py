@@ -8,6 +8,7 @@ Created on Tue Jul  4 15:46:50 2017
 
 import os
 import numpy as np
+import operator
 '''
 
 '''
@@ -31,14 +32,38 @@ def fileDistance(fileName1,fileName2):
 
 if __name__ == '__main__':
     
-    filePath = "E:\\GitHub\\MLinAction\\Ch02\\SampleData\\digits\\trainingDigits"
+    trainingFilePath = "E:\\GitHub\\MLinAction\\Ch02\\SampleData\\digits\\trainingDigits"
+    testFilePath = "E:\\GitHub\\MLinAction\\Ch02\\SampleData\\digits\\testDigits"
 
-    fileName = []
+    trainingFileName = []
+    for file in os.listdir(trainingFilePath):
+        trainingFileName.append([trainingFilePath+"\\"+file,file[0]])
+        
+    testFileName = []
+    for file in os.listdir(testFilePath):
+        testFileName.append([testFilePath+"\\"+file,file[0]])
 
-    for file in os.listdir(filePath):
-        fileName.append([filePath+"\\"+file,file[0]])
-
-    print(fileName[0][0])
+    print(trainingFileName[0][0])
     
-    file1 = importFile2Array(fileName[0][0])
+    file1 = importFile2Array(trainingFileName[0][0])
     print(file1)
+    
+    classCount = {}
+    
+    for filePath1 in testFileName:
+        fileName1 = filePath1[0][0]
+        for filePath2 in trainingFileName:
+            fileName2 = filePath2[0]
+            distance = fileDistance(fileName1,fileName2)
+            classCount[filePath2[1]] = classCount.get(filePath2[1],0) + 1
+
+        sortedClassCount = sorted(classCount.items(), key=operator.itemgetter(1), reverse=True)
+    
+            
+
+
+
+
+
+
+
