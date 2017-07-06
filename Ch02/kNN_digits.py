@@ -74,7 +74,7 @@ inX,answers = files2Array(pathname2)
 
 count = 0
 for i in range(len(inX)):
-    if classifyKNN(inX[i],dataset,labels,3) == answers[i]:
+    if classifyKNN(inX[i],dataset,labels,2) == answers[i]:
         count += 1
 
 print(str(count/len(inX) * 100) + "%")
