@@ -3,6 +3,7 @@ Ch02 kNN
 open()
 np.tile()
 astype()
+list()
 list.append()
 list.extend()
 os.listdir()
